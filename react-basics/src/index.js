@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import Welcome from "./Welcome";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -14,10 +15,6 @@ const sayHello = () => {
 
 const printName = (name) => console.log(name);
 const sayHi = (e) => console.log(e);
-
-const Welcome = () => {
-  return <h2>Welcome to Teachmint</h2>;
-};
 
 const Address = (props) => {
   return (
