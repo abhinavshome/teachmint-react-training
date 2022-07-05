@@ -9,6 +9,8 @@ const Counter = () => {
 
   return (
     <div>
+      <hr />
+      <h3>Counter</h3>
       <div>{count}</div>
       <div>
         <button onClick={increment}>+</button>

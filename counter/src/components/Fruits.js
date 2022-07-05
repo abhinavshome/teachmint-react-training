@@ -21,6 +21,8 @@ const Fruits = () => {
 
   return (
     <div>
+      <hr />
+      <h3>Fruits</h3>
       <input
         type="text"
         value={newFruit}
