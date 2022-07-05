@@ -4,6 +4,23 @@ import ACTION_TYPES from "../redux/actionTypes";
 
 const TodoList = () => {
   const todos = useSelector((state) => state.todos.list);
+  const currentFilter = useSelector((state) => state.todos.currentFilter);
+  const visibleTodos = todos.filter((todo) => {
+    if (currentFilter === "ALL") {
+      return true;
+    }
+
+    if (currentFilter === "COMPLETE" && todo.done) {
+      return true;
+    }
+
+    if (currentFilter === "INCOMPLETE" && !todo.done) {
+      return true;
+    }
+
+    return false;
+  });
+  const filters = useSelector((state) => state.todos.filters);
   const [newTodo, setNewTodo] = useState("");
   const dispatch = useDispatch();
   return (
@@ -24,6 +41,22 @@ const TodoList = () => {
           Add
         </button>
       </div>
+      <div>
+        {filters.map((filter, i) => (
+          <button
+            key={i}
+            style={{
+              backgroundColor:
+                filter === currentFilter ? "yellow" : "lightgray",
+            }}
+            onClick={() =>
+              dispatch({ type: ACTION_TYPES.SET_FILTER, payload: filter })
+            }
+          >
+            {filter}
+          </button>
+        ))}
+      </div>
       <table>
         <thead>
           <tr>
@@ -34,7 +67,7 @@ const TodoList = () => {
           </tr>
         </thead>
         <tbody>
-          {todos.map((todo) => (
+          {visibleTodos.map((todo) => (
             <tr key={todo.id}>
               <td>{todo.id}</td>
               <td>{todo.label}</td>
