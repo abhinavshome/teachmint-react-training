@@ -4,6 +4,10 @@ const reducer = (state = 1, action) => {
     return state + 1;
   }
 
+  if (action.type === "INCREMENT_BY") {
+    return state + action.payload;
+  }
+
   if (action.type === "DECREMENT") {
     return state - 1;
   }
