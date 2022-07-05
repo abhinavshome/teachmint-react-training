@@ -1,8 +1,12 @@
-import { createStore } from "redux";
-import reducer from "./reducer";
+import { combineReducers, createStore } from "redux";
+import counterReducer from "./counterReducer";
+import todoReducer from "./todoReducer";
 
 const store = createStore(
-  reducer,
+  combineReducers({
+    todos: todoReducer,
+    counter: counterReducer,
+  }),
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
