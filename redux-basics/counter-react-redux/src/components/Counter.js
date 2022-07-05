@@ -17,10 +17,10 @@ const Counter = () => {
         <input
           type="number"
           value={incBy}
-          onChange={(e) => setIncBy(+e.target.value)}
+          onChange={(e) => setIncBy(e.target.value)}
         />
         <button
-          onClick={() => dispatch({ type: "INCREMENT_BY", payload: incBy })}
+          onClick={() => dispatch({ type: "INCREMENT_BY", payload: +incBy })}
         >
           ++
         </button>
