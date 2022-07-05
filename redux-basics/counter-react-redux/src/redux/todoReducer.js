@@ -1,4 +1,3 @@
-import { act } from "react-dom/test-utils";
 import ACTION_TYPES from "./actionTypes";
 
 const INITIAL_STATE = {
