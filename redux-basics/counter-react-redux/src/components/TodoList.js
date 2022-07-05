@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ACTION_TYPES from "../redux/actionTypes";
 
 const TodoList = () => {
-  const todos = useSelector((state) => state.todos);
+  const todos = useSelector((state) => state.todos.list);
   const [newTodo, setNewTodo] = useState("");
   const dispatch = useDispatch();
   return (
