@@ -7,8 +7,7 @@ const HomePage = () => {
   const books = useSelector((state) => state.books);
   const dispatch = useDispatch();
   useEffect(() => {
-    const p = axios.get("http://localhost:5000/books");
-    p.then(
+    axios.get("http://localhost:5000/books").then(
       (res) => dispatch({ type: "LOAD_BOOKS", payload: res.data }),
       (err) => console.log(err)
     );
