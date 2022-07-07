@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "http://localhost:5000/books";
+const url = "http://localhost:3300/books";
 
 export const fetchBooks = () => {
   return axios.get(url);

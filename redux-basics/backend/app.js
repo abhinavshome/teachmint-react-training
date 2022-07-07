@@ -27,6 +27,6 @@ app.get("/", function (req, res) {
   res.send("Welcome to bookscart backend");
 });
 
-var server = app.listen(5000, function () {
-  console.log("server started on 5000");
+var server = app.listen(3300, function () {
+  console.log("server started on 3300");
 });
