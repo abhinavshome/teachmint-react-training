@@ -2,34 +2,29 @@ var express = require("express");
 var app = express();
 var cors = require("cors");
 app.use(cors());
+const bodyParser = require("body-parser");
+//Here we are configuring express to use body-parser as middle-ware.
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+var db = require("./db");
 
-const books = [
-  {
-    id: 1,
-    title: "The Alchemist",
-    author: "Paulo Cohelo",
-    rating: 4,
-    price: 22,
-  },
-  {
-    id: 2,
-    title: "5 point someone",
-    author: "Chetan Bhagat",
-    rating: 5,
-    price: 21,
-  },
-];
-
-app.route("/books").get(function (req, res) {
-  res.json(books);
+app.route("/books").get(async (req, res) => {
+  const books = await db.execute("select * from books");
+  console.log(books[0]);
+  return res.json(books[0]);
 });
 
-app.route("/Angular").get(function (req, res) {
-  res.send("Tutorial on Angular");
+app.route("/books").post(async (req, res) => {
+  const { title, author, price, rating } = req.body;
+  const qeuryRes = await db.execute(
+    `insert into books (title, author, price, rating) value ('${title}', '${author}', ${price}, ${rating})`
+  );
+  console.log(qeuryRes);
+  return res.send({ insertedId: qeuryRes[0].insertId });
 });
 
 app.get("/", function (req, res) {
-  res.send("Welcome to Guru99 Tutorials");
+  res.send("Welcome to bookscart backend");
 });
 
 var server = app.listen(5000, function () {

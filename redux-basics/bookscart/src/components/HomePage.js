@@ -1,13 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchBooks } from "../api";
 import Book from "./Book";
 
 const HomePage = () => {
   const books = useSelector((state) => state.books);
   const dispatch = useDispatch();
   useEffect(() => {
-    axios.get("http://localhost:5000/books").then(
+    fetchBooks().then(
       (res) => dispatch({ type: "LOAD_BOOKS", payload: res.data }),
       (err) => console.log(err)
     );
