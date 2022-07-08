@@ -5,3 +5,9 @@
 .menu a {
   margin-right: 10px;
 }
+
+.link {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}

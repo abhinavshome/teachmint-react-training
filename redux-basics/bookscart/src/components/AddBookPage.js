@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { saveBook } from "../api";
 import styles from "./AddBookPage.module.css";
+import loader from "../images/loader.gif";
 
 const AddBookPage = () => {
   const [title, setTitle] = useState("");
@@ -10,6 +11,7 @@ const AddBookPage = () => {
   const [price, setPrice] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,7 +28,9 @@ const AddBookPage = () => {
       price: +price,
     };
 
+    setLoading(true);
     const res = await saveBook(book);
+    setLoading(false);
 
     setTitle("");
     setAuthor("");
@@ -79,6 +83,11 @@ const AddBookPage = () => {
           />
         </div>
         <button type="submit">Save</button>
+        {loading && (
+          <>
+            Loading <img src={loader} alt="" />
+          </>
+        )}
       </form>
     </div>
   );
