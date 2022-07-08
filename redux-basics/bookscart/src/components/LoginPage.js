@@ -1,8 +1,10 @@
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login, register } from "../api";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
@@ -13,10 +15,18 @@ const LoginPage = () => {
       console.log(res);
       localStorage.setItem("username", res.data.username);
       localStorage.setItem("token", res.data.token);
+      dispatch({ type: "LOGIN" });
+      dispatch({
+        type: "ALERT_SUCCESS",
+        payload: "Logged in successfully",
+      });
+      navigate("/");
     } catch (err) {
-      console.log(err);
+      dispatch({
+        type: "ALERT_ERROR",
+        payload: "Invlaid username or password",
+      });
     }
-    // navigate("/");
   };
   return (
     <div>

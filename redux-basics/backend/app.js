@@ -46,6 +46,21 @@ app.route("/users/login").post(async (req, res) => {
   return res.send(queryRes[0][0]);
 });
 
+app.get("/users/logout", async (req, res) => {
+  const token = req.headers.authtoken;
+  console.log(token);
+  const queryRes = await db.execute(
+    `update users set token = NULL where token = '${token}'`
+  );
+
+  console.log(queryRes);
+  if (queryRes[0].changedRows === 0) {
+    return res.status(404).send({ message: "User not found" });
+  }
+
+  return res.send({ message: "Logged out succefully" });
+});
+
 app.get("/", function (req, res) {
   res.send("Welcome to bookscart backend");
 });

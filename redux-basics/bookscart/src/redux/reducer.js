@@ -11,6 +11,7 @@ const INITIAL_STATE = {
     totalPrice: 0,
     totalItems: 0,
   },
+  loggedIn: false,
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -43,6 +44,16 @@ const reducer = (state = INITIAL_STATE, action) => {
       case "ALERT_ERROR":
         newState.alert.type = "error";
         newState.alert.message = action.payload;
+        break;
+      case "CLEAR_ALERT":
+        newState.alert.type = null;
+        newState.alert.message = null;
+        break;
+      case "LOGIN":
+        newState.loggedIn = true;
+        break;
+      case "LOGOUT":
+        newState.loggedIn = false;
         break;
       default:
         break;
