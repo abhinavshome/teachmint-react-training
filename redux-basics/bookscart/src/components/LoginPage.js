@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { login, register } from "../api";
+import { login } from "../api";
 
 const LoginPage = () => {
   const navigate = useNavigate();

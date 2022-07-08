@@ -1,12 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  BrowserRouter,
-  NavLink,
-  Route,
-  Routes,
-  useNavigate,
-} from "react-router-dom";
+import { BrowserRouter, NavLink, Route, Routes } from "react-router-dom";
 import { logout } from "./api";
 import "./App.css";
 import AboutPage from "./components/AboutPage";
@@ -29,7 +23,7 @@ const App = () => {
     } else {
       dispatch({ type: "LOGOUT" });
     }
-  }, []);
+  });
 
   const handleLogout = async () => {
     try {

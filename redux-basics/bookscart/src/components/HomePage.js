@@ -1,5 +1,4 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchBooks } from "../api";
 import Book from "./Book";
@@ -12,7 +11,7 @@ const HomePage = () => {
       (res) => dispatch({ type: "LOAD_BOOKS", payload: res.data }),
       (err) => console.log(err)
     );
-  }, []);
+  });
 
   return (
     <div>
