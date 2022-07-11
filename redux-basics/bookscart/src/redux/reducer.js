@@ -6,6 +6,7 @@ const INITIAL_STATE = {
     message: "",
   },
   books: [],
+  orders: [],
   cart: {
     items: [],
     totalPrice: 0,
@@ -19,6 +20,9 @@ const reducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
       case "LOAD_BOOKS":
         newState.books = action.payload;
+        break;
+      case "LOAD_ORDERS":
+        newState.orders = action.payload;
         break;
       case "ADD_TO_CART":
         const book = action.payload;

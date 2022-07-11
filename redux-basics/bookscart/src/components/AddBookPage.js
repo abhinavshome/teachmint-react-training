@@ -1,16 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { saveBook } from "../api";
 import styles from "./AddBookPage.module.css";
 import loader from "../images/loader.gif";
+import { useDispatch } from "react-redux";
 
 const AddBookPage = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (localStorage.getItem("username") !== "admin") {
+      navigate("/login");
+    }
+  });
+
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [rating, setRating] = useState("");
   const [price, setPrice] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -29,15 +37,18 @@ const AddBookPage = () => {
     };
 
     setLoading(true);
-    const res = await saveBook(book);
+    try {
+      const res = await saveBook(book);
+      setTitle("");
+      setAuthor("");
+      setRating("");
+      setPrice("");
+      console.log(res);
+      navigate("/");
+    } catch (err) {
+      dispatch({ type: "ALERT_ERROR", payload: err.response.data.message });
+    }
     setLoading(false);
-
-    setTitle("");
-    setAuthor("");
-    setRating("");
-    setPrice("");
-    console.log(res);
-    navigate("/");
   };
 
   return (

@@ -24,12 +24,20 @@ export const fetchBooks = () => {
   return makeGETCall(`${url}/books`);
 };
 
+export const fetchOrders = () => {
+  return makeGETCall(`${url}/orders`);
+};
+
 export const saveBook = (book) => {
   return makePOSTCall(`${url}/books`, book);
 };
 
 export const register = (user) => {
   return makePOSTCall(`${url}/users/register`, user);
+};
+
+export const placeOrder = (cart) => {
+  return makePOSTCall(`${url}/place-order`, cart);
 };
 
 export const login = (user) => {

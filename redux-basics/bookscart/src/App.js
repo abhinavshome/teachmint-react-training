@@ -23,7 +23,7 @@ const App = () => {
     } else {
       dispatch({ type: "LOGOUT" });
     }
-  });
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -55,9 +55,11 @@ const App = () => {
           <NavLink to="/">Home</NavLink>
           <NavLink to="/cart">Cart({cart.totalItems})</NavLink>
           <NavLink to="/about">About</NavLink>
-          <NavLink to="/add-book">Add Book</NavLink>
           {isLoggedIn ? (
             <>
+              {localStorage.getItem("username") === "admin" && (
+                <NavLink to="/add-book">Add Book</NavLink>
+              )}
               <NavLink to="/dashboard">Dashboard</NavLink>
               <span>Welcome {localStorage.getItem("username")}</span>{" "}
               <span className="link" onClick={handleLogout}>

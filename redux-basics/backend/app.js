@@ -13,12 +13,44 @@ app.route("/books").get(async (req, res) => {
   return res.json(books[0]);
 });
 
+app.route("/orders").get(async (req, res) => {
+  //find the user
+  const token = req.headers.authtoken;
+  let queryRes = await db.execute(
+    `select * from users where token = '${token}'`
+  );
+  if (queryRes[0].length === 0) {
+    return res
+      .status(404)
+      .send({ message: "You should be logged in to perform this action" });
+  }
+  const userId = queryRes[0][0].id;
+
+  queryRes = await db.execute(`select * from orders where user_id=${userId}`);
+  return res.json(queryRes[0]);
+});
+
 app.route("/books").post(async (req, res) => {
+  //find the user
+  const token = req.headers.authtoken;
+  let queryRes = await db.execute(
+    `select * from users where token = '${token}'`
+  );
+  if (queryRes[0].length === 0) {
+    return res
+      .status(404)
+      .send({ message: "You should be logged in to perform this action" });
+  }
+
+  if (queryRes[0][0].username !== "admin") {
+    return res.status(403).send({ message: "Only admin can do it" });
+  }
+
   const { title, author, price, rating } = req.body;
-  const qeuryRes = await db.execute(
+  queryRes = await db.execute(
     `insert into books (title, author, price, rating) value ('${title}', '${author}', ${price}, ${rating})`
   );
-  return res.send({ insertedId: qeuryRes[0].insertId });
+  return res.send({ insertedId: queryRes[0].insertId });
 });
 
 app.route("/users/register").post(async (req, res) => {
@@ -27,6 +59,29 @@ app.route("/users/register").post(async (req, res) => {
     `insert into users (username, password) values ('${username}', '${password}')`
   );
   return res.send({ message: "user created successfully" });
+});
+
+app.route("/place-order").post(async (req, res) => {
+  //find the user
+  const token = req.headers.authtoken;
+  let queryRes = await db.execute(
+    `select * from users where token = '${token}'`
+  );
+  if (queryRes[0].length === 0) {
+    return res
+      .status(404)
+      .send({ message: "You should be logged in to perform this action" });
+  }
+
+  const userId = queryRes[0][0].id;
+  const cart = req.body;
+
+  queryRes = await db.execute(
+    `insert into orders values(null, '${userId}', '${JSON.stringify(cart)}')`
+  );
+  return res.send({
+    message: `Order placed successfully with order id: ${queryRes[0].insertId}`,
+  });
 });
 
 app.route("/users/login").post(async (req, res) => {

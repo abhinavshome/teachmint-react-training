@@ -7,11 +7,12 @@ const HomePage = () => {
   const books = useSelector((state) => state.books);
   const dispatch = useDispatch();
   useEffect(() => {
+    console.log("called");
     fetchBooks().then(
       (res) => dispatch({ type: "LOAD_BOOKS", payload: res.data }),
       (err) => console.log(err)
     );
-  });
+  }, []);
 
   return (
     <div>
